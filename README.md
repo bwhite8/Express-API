@@ -48,3 +48,7 @@ Clone the repo and install the following dependencies:
     - defines application
 - routes.js
     - defines routes and in-memory storage
+
+### Caveats
+- Users are able to duplicate books in the library
+- Query strings will not return values
