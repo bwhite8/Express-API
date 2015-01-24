@@ -1,5 +1,6 @@
 ## Express-API
 JSON-centric API written in Javascript, using Express.JS.  Facilitates CRD events for a hypothetical bookstore.
+Utilizes in-memory storage.
 
 ## Get Started
 Clone the repo and install the following dependencies:
@@ -41,3 +42,9 @@ Clone the repo and install the following dependencies:
     7. /titles
       - GET
         - retrieve a list of book titles in our collection
+
+### Components
+- app.js
+    - defines application
+- routes.js
+    - defines routes and in-memory storage
