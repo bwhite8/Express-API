@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // parsing application.x-www
 app.use(multer());                                  // parsing multipart/form-data
 
 // ~~~~~~~~~~~~~~~~~~~ Routes ~~~~~~~~~~~~~~~~~~~~~~~~
-
+app.use(routes.emptyList);                          // added 1/26 - catches empty book list
 app.get('/', routes.default);
 app.get('/books', routes.bookList);
 app.post('/books', routes.bookPost);
