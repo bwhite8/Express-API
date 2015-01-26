@@ -44,10 +44,25 @@ var books = [                                       // Library initially availab
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Routes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+exports.emptyList = function(req, res, next){       // catches if book list is empty
+
+  if (req.method == "POST") {
+
+    next();
+
+  } else if (books.length == 0){
+
+    res.status(404).json('There are no books in our library! POST to /books in order to add a book');
+
+  } else {
+
+    next();
+  }
+}
+
 exports.default = function(req, res){
 
-  res.statusCode = 200;
-  return res.send('Welcome to the Bookstore API. Take a look at the README.md file on GitHub for a list of valid endpoints.')
+  res.status(400).json('Welcome to the Bookstore API. Take a look at the README.md file on GitHub for a list of valid endpoints.');
 
 };
 
@@ -66,8 +81,7 @@ exports.bookPost = function(req, res){            // add new book to library
   !req.body.hasOwnProperty('year') ||
   !req.body.hasOwnProperty('summary')) {
 
-    res.statusCode = 400;
-    return res.send('Unable to Add Book, Not all required properties were provided.');
+    res.status(400).json('Unable to Add Book, Not all required properties were provided.');
 
   } else {
 
@@ -96,8 +110,7 @@ exports.bookIdGet = function(req, res){                       // gets book based
 
   if(books.length <= req.params.id || req.params.id < 0) {    // if the ID inputted is greater than the size of the library, or if the ID is less than 0, throw an error..
 
-    res.statusCode = 404;
-    return res.send('No Book Found, Invalid Book ID');
+    res.status(404).json('No Book Found, Invalid Book ID');
 
   } else {
 
@@ -111,8 +124,7 @@ exports.bookIdDel = function(req, res){        // delete book based on position 
 
   if(books.length <= req.params.id) {         // if the ID inputted is greater than the size of the library, throw an error...
 
-    res.statusCode = 404;
-    return res.send('Unable to Delete, Invalid Book ID');
+    res.status(404).json('Unable to Delete, Invalid Book ID');
 
   } else {
 
@@ -129,8 +141,7 @@ exports.bookIdPublisher = function(req, res){               // gets publisher ba
 
   if(books.length <= req.params.id || req.params.id < 0) {  // if the ID inputted is greater than the size of the library, or if the ID is less than 0, throw an error
 
-    res.statusCode = 404;
-    return res.send('No Publisher Found, Invalid Book ID');
+    res.status(404).json('No Publisher Found, Invalid Book ID');
 
   } else {
 
@@ -143,8 +154,7 @@ exports.bookIdAuthor = function(req, res){                  // gets author based
 
   if(books.length <= req.params.id || req.params.id < 0) {  // if the ID inputted is greater than the size of the library, or if the ID is less than 0, throw an error
 
-    res.statusCode = 404;
-    return res.send('No Author Found, Invalid Book ID');
+    res.status(404).json('No Author Found, Invalid Book ID');
 
   } else {
 
