@@ -1,0 +1,51 @@
+// Partial Page: routes.js
+// Purpose: Allow use of Author and Publisher Query Strings for /Books route
+// Status: Yellow
+// Issues: Books will duplicate in the list when both publisher and author strings are specified.
+
+
+exports.bookList = function(req, res, author){             // gets current library
+
+if (req.query.author || req.query.publisher){              // if author or publisher exists in the query string
+  var retainer = books;                                    // "retainer" resets the book list
+  var bValues = [];                                        // books to output
+  if (req.query.author){                                   // if author is present in the string
+
+    for (i = 0; i < books.length; i++){                    // loop through the number of books
+
+      if (books[i].author == req.query.author && bValues.indexOf(books[i].author) < 0) { // if the author of the book in our library is equal to the author in specified
+                                                                                         // in the URL AND the book doesn't already exist in our list of books to output..
+        bValues[bValues.length] = books[i];                // add matching book to output list
+
+      }
+    }
+
+  }
+
+  if (req.query.publisher) {                              // if the publisher is specified in the query string
+
+    if (bValues.length == 0) {                            // if our output list is empty (author wasn't specified)
+      books = bValues;                                    // reassign books to equal our current list of books to output
+      bValues = [];                                       // empty bValues
+    }
+
+    for (i = 0; i < books.length; i++){                   // loop through our books
+
+      if (books[i].publisher == req.query.publisher && bValues.indexOf(books[i].publisher) < 0) { // doesn't work as intended
+
+        bValues[bValues.length] = books[i];               // add matching book to output list
+
+      }
+    }
+  }
+
+  books = retainer;                                       // reassign books back to it's original state
+  res.json(bValues);                                      // output final list of books
+
+} else {
+
+  res.json(books);                                        // if neither the author nor publisher is specified, output all books
+
+}
+
+};
